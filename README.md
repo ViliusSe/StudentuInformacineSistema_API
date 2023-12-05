@@ -2,12 +2,12 @@
 
 ## Projektine uzduotis
 
-####Entities:
+#### Entities:
 1. Departamentas. Turi: Daug studentų, daug paskaitų.
 2. Paskaita. Turi: Daug departamentų.
 3. Studentas. Turi: Daug paskaitų, vieną departamentą.
  
-####Funkcionalumai:
+#### Funkcionalumai:
 1. Sukurti departamentą ir į jį pridėti studentus, paskaitas(papildomi points jei pridedamos paskaitos jau egzistuojančios duomenų bazėje).
 2. Pridėti studentus/paskaitas į jau egzistuojantį departamentą.
 3. Sukurti paskaitą ir ją priskirti prie departamento.
