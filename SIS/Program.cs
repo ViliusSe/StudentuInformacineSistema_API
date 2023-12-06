@@ -7,12 +7,7 @@ using SIS.Services;
 using System.Data;
 using System.Reflection;
 
-namespace SIS
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
+
 
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllers();
@@ -31,38 +26,63 @@ namespace SIS
             /* 
             * MIGRATION START
             */
+            string dbConnectionString = builder.Configuration.GetConnectionString("PostgreConnection");
+            EnsureDatabase.For.PostgresqlDatabase(dbConnectionString);
+            var upgrader = DeployChanges.To
+            .PostgresqlDatabase(dbConnectionString)
+            .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+            .LogToConsole()
+            .Build();
 
-            //var configuration = new ConfigurationBuilder()
-            //.SetBasePath(Directory.GetCurrentDirectory())
-            //.AddJsonFile("appsettings.json")
-            //.Build();
-
-            //var upgrader = DeployChanges.To
-            //    .PostgresqlDatabase(dbConnectionString)
-            //    .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-            //    .LogToConsole()
-            //    .Build();
-
-            //var result = upgrader.PerformUpgrade();
+            var result = upgrader.PerformUpgrade();
 
             //if (!result.Successful)
             //{
             //    Console.ForegroundColor = ConsoleColor.Red;
             //    Console.WriteLine(result.Error);
             //    Console.ResetColor();
-            //}
-            //else
-            //{
-            //    Console.ForegroundColor = ConsoleColor.Green;
-            //    Console.WriteLine("Success!");
-            //    Console.ResetColor();
+            //    Console.ReadLine();
+            //    return -1;
             //}
 
-            /*
-             * MIGRATION END
-             */
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.WriteLine("Success!");
+            //Console.ResetColor();
+            //return 0;
+        
+        //var configuration = new ConfigurationBuilder()
+        //.SetBasePath(Directory.GetCurrentDirectory())
+        //.AddJsonFile("appsettings.json")
+        //.Build();
 
-            var app = builder.Build();
+        //var upgrader = DeployChanges.To
+        //    .PostgresqlDatabase(dbConnectionString)
+        //    .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+        //    .LogToConsole()
+        //    .Build();
+
+        //var result = upgrader.PerformUpgrade();
+
+        //if (!result.Successful)
+        //{
+        //    Console.ForegroundColor = ConsoleColor.Red;
+        //    Console.WriteLine(result.Error);
+        //    Console.ResetColor();
+        //}
+        //else
+        //{
+        //    Console.ForegroundColor = ConsoleColor.Green;
+        //    Console.WriteLine("Success!");
+        //    Console.ResetColor();
+        //}
+
+
+
+        /*
+         * MIGRATION END
+         */
+
+        var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -71,7 +91,7 @@ namespace SIS
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
@@ -79,6 +99,3 @@ namespace SIS
             app.MapControllers();
 
             app.Run();
-        }
-    }
-}

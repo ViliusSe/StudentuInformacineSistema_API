@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SQL_Scripts\1_createMainTables.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SQL_Scripts\1_createMainTables.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.24" />
     <PackageReference Include="dbup-postgresql" Version="5.0.37" />
     <PackageReference Include="Npgsql" Version="8.0.1" />
