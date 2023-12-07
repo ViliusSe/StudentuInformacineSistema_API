@@ -1,19 +1,19 @@
 ﻿using Dapper;
-using SIS.Entities;
 using SIS.Interfaces;
+using System.ComponentModel;
 using System.Data;
 
 namespace SIS.Repositories
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class LectureRepository : ILectureRepository
     {
         private readonly IDbConnection _connection;
-        public DepartmentRepository(IDbConnection connection)
+        public LectureRepository(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public int AddDepartment(string name)
+        public int AddLecture(string name)
         {
             try
             {
@@ -21,11 +21,11 @@ namespace SIS.Repositories
                 {
                     name = name
                 };
-                return _connection.Execute("INSERT INTO departments (name) values (@name)", queryArguments);
+                return _connection.Execute("INSERT INTO lectures (name) VALUES (@name)", queryArguments);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Klaida 500, department repositorijoje --- ", ex);
+                Console.WriteLine("Klaida 500, lecture repositorijoje --- ", ex);
                 throw new Exception(ex.Message);
             }
         }

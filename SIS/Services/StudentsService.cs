@@ -1,20 +1,40 @@
 ﻿using SIS.Entities;
+using SIS.DTO;
 using SIS.Interfaces;
 
 namespace SIS.Services
 {
     public class StudentsService : IStudentsService
     {
-        private readonly IStudentsRepository _studentsService;
-        public StudentsService(IStudentsRepository studentsRepository) {
-            _studentsService = studentsRepository;
+        private readonly IStudentsRepository _studentsRepository;
+        public StudentsService(IStudentsRepository studentsRepository)
+        {
+            _studentsRepository = studentsRepository;
         }
 
-        public IEnumerable<Student> GetAll()
+        public int AddDepartment(int studentId, int departmentInt)
         {
-           try
+                return _studentsRepository.AddDepartment(studentId, departmentInt);
+        }
+
+        public int AddStudent(string name)
+        {
+            try
             {
-                return _studentsService.GetAll();
+                return _studentsRepository.AddStudent(name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Serverio klaida 500 - klaida sutdentService AddStudent metode --- " + ex.ToString());
+                throw ex;
+            }
+        }
+
+        public IEnumerable<StudentDto> GetAll()
+        {
+            try
+            {
+                return _studentsRepository.GetAll();
             }
             catch (Exception ex)
             {

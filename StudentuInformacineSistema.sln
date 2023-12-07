@@ -5,8 +5,6 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS", "SIS\SIS.csproj", "{0163BBA4-27DC-4D26-BAB7-4B553EAA557C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGreTest", "..\..\..\Downloads\PostGreTest 1\PostGreTest\PostGreTest\PostGreTest.csproj", "{1595D6D6-F66D-4E71-B734-8FB8BC807D98}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{0163BBA4-27DC-4D26-BAB7-4B553EAA557C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0163BBA4-27DC-4D26-BAB7-4B553EAA557C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0163BBA4-27DC-4D26-BAB7-4B553EAA557C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1595D6D6-F66D-4E71-B734-8FB8BC807D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1595D6D6-F66D-4E71-B734-8FB8BC807D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1595D6D6-F66D-4E71-B734-8FB8BC807D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1595D6D6-F66D-4E71-B734-8FB8BC807D98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

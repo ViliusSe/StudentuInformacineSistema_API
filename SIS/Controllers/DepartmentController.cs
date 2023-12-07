@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIS.DTO;
 using SIS.Entities;
 using SIS.Interfaces;
 using SIS.Services;
@@ -17,7 +18,7 @@ namespace SIS.Controllers
             _service = service;
         }
         [HttpPost]
-        public async Task<IActionResult>AddDepartment([FromBody] Department department)
+        public async Task<IActionResult>AddDepartment([FromBody] DepartmentDto department)
         {
             try
             {

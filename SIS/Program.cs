@@ -1,6 +1,7 @@
 
 using DbUp;
 using Npgsql;
+using Serilog;
 using SIS.Interfaces;
 using SIS.Repositories;
 using SIS.Services;
@@ -9,93 +10,116 @@ using System.Reflection;
 
 
 
-            var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(builder.Configuration.GetConnectionString("PostgreConnection")));
-
-            builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
-            builder.Services.AddScoped<IStudentsService, StudentsService>();
-
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(builder.Configuration.GetConnectionString("PostgreConnection")));
 
 
-            /* 
-            * MIGRATION START
-            */
-            string dbConnectionString = builder.Configuration.GetConnectionString("PostgreConnection");
-            EnsureDatabase.For.PostgresqlDatabase(dbConnectionString);
-            var upgrader = DeployChanges.To
-            .PostgresqlDatabase(dbConnectionString)
-            .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-            .LogToConsole()
-            .Build();
+/* 
+*  Adding Requests
+*/
+builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
+builder.Services.AddScoped<IStudentsService, StudentsService>();
 
-            var result = upgrader.PerformUpgrade();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
-            //if (!result.Successful)
-            //{
-            //    Console.ForegroundColor = ConsoleColor.Red;
-            //    Console.WriteLine(result.Error);
-            //    Console.ResetColor();
-            //    Console.ReadLine();
-            //    return -1;
-            //}
-
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine("Success!");
-            //Console.ResetColor();
-            //return 0;
-        
-        //var configuration = new ConfigurationBuilder()
-        //.SetBasePath(Directory.GetCurrentDirectory())
-        //.AddJsonFile("appsettings.json")
-        //.Build();
-
-        //var upgrader = DeployChanges.To
-        //    .PostgresqlDatabase(dbConnectionString)
-        //    .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-        //    .LogToConsole()
-        //    .Build();
-
-        //var result = upgrader.PerformUpgrade();
-
-        //if (!result.Successful)
-        //{
-        //    Console.ForegroundColor = ConsoleColor.Red;
-        //    Console.WriteLine(result.Error);
-        //    Console.ResetColor();
-        //}
-        //else
-        //{
-        //    Console.ForegroundColor = ConsoleColor.Green;
-        //    Console.WriteLine("Success!");
-        //    Console.ResetColor();
-        //}
+builder.Services.AddScoped<ILectureRepository, LectureRepository>();
+builder.Services.AddScoped<ILectureService, LectureService>();
 
 
+// Creating connection shortcut
+string dbConnectionString = builder.Configuration.GetConnectionString("PostgreConnection");
 
-        /*
-         * MIGRATION END
-         */
+/* 
+* MIGRATION START   DBUP
+*/
+EnsureDatabase.For.PostgresqlDatabase(dbConnectionString);
+var upgrader = DeployChanges.To
+.PostgresqlDatabase(dbConnectionString)
+.WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+.LogToConsole()
+.Build();
 
-        var app = builder.Build();
+var result = upgrader.PerformUpgrade();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+/*
+ * ALTERNATIVE DBUP CODE
+ */
 
-    app.UseHttpsRedirection();
+//if (!result.Successful)
+//{
+//    Console.ForegroundColor = ConsoleColor.Red;
+//    Console.WriteLine(result.Error);
+//    Console.ResetColor();
+//    Console.ReadLine();
+//    return -1;
+//}
 
-            app.UseAuthorization();
+//Console.ForegroundColor = ConsoleColor.Green;
+//Console.WriteLine("Success!");
+//Console.ResetColor();
+//return 0;
+
+//var configuration = new ConfigurationBuilder()
+//.SetBasePath(Directory.GetCurrentDirectory())
+//.AddJsonFile("appsettings.json")
+//.Build();
+
+//var upgrader = DeployChanges.To
+//    .PostgresqlDatabase(dbConnectionString)
+//    .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+//    .LogToConsole()
+//    .Build();
+
+//var result = upgrader.PerformUpgrade();
+
+//if (!result.Successful)
+//{
+//    Console.ForegroundColor = ConsoleColor.Red;
+//    Console.WriteLine(result.Error);
+//    Console.ResetColor();
+//}
+//else
+//{
+//    Console.ForegroundColor = ConsoleColor.Green;
+//    Console.WriteLine("Success!");
+//    Console.ResetColor();
+//}
+
+/*
+ * MIGRATION END
+ */
+
+/*
+ * ADDING LOGGING - SERILOG
+ */
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+/* END LOGGING */
 
 
-            app.MapControllers();
+var app = builder.Build();
 
-            app.Run();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+
+app.MapControllers();
+
+app.Run();
