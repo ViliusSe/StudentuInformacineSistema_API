@@ -23,7 +23,7 @@ namespace SIS.Services
             return _departmentRepository.GetAllDepartments();
         }
 
-        public IEnumerable<DepartmentDto> GetDepartment(int id)
+        public DepartmentDto GetDepartment(int id)
         {
             return _departmentRepository.GetDepartment(id);
         }

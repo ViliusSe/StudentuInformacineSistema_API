@@ -23,7 +23,7 @@ namespace SIS.Services
         {
             return _repository.GetAllLectures();
         }
-        public IEnumerable<LectureDto> GetLecture(int id)
+        public LectureDto GetLecture(int id)
         {
             return _repository.GetLecture(id);
         }

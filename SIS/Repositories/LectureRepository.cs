@@ -46,11 +46,11 @@ namespace SIS.Repositories
             }
         }
 
-        public IEnumerable<LectureDto> GetLecture(int id)
+        public LectureDto GetLecture(int id)
         {
             try
             {
-                return _connection.Query<LectureDto>("Select * from lectures WHERE id = @id", id);
+                return _connection.QuerySingleOrDefault<LectureDto>("Select * from lectures WHERE id = @id", new { id });
             }
             catch (Exception ex)
             {

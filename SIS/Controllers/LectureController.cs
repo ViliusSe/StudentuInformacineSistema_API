@@ -50,7 +50,7 @@ namespace SIS.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetLecture([FromBody] LectureDto lecture)
         {
             try
@@ -98,7 +98,7 @@ namespace SIS.Controllers
 
         //NON CRUD REQUESTS
         [HttpPost]
-        public async Task<IActionResult> AddDepartment([FromBody] DepartmentLectures dep_lec)
+        public async Task<IActionResult> AddDepartment([FromBody] DepartmentLecturesDto dep_lec)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace SIS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent([FromBody]  StudentLectures stu_lec)
+        public async Task<IActionResult> AddStudent([FromBody]  StudentLecturesDto stu_lec)
         {
             try
             {

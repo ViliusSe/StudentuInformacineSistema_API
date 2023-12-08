@@ -6,7 +6,6 @@
         public int lectures_id { get; set; }
 
         public Student student { get; set; } = null!;
-
         public Lecture lecture { get; set; } = null!;
     }
 }

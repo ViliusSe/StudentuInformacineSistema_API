@@ -45,11 +45,11 @@ namespace SIS.Repositories
                 throw new Exception(ex.Message);
             }
         }
-        public IEnumerable<DepartmentDto> GetDepartment(int id)
+        public DepartmentDto GetDepartment(int id)
         {
             try
             {
-                return _connection.Query<DepartmentDto>("SELECT * FROM departments WHERE id = @id;", id);
+                return _connection.QuerySingleOrDefault<DepartmentDto>("SELECT * FROM departments WHERE id = @id;", new { id });
             }
             catch (Exception ex)
             {

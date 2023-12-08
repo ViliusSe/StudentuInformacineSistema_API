@@ -26,7 +26,7 @@ namespace SIS.Services
             return _studentsRepository.GetAll();
         }
 
-        public IEnumerable<StudentDto> GetStudent(int id)
+        public StudentDto GetStudent(int id)
         {
             return _studentsRepository.GetStudent(id);
         }
@@ -45,6 +45,11 @@ namespace SIS.Services
         public int AddDepartment(int studentId, int departmentInt)
         {
             return _studentsRepository.AddDepartment(studentId, departmentInt);
+        }
+
+        public IEnumerable<Student> ShowAllStudentsAndRelations()
+        {
+            return _studentsRepository.ShowAllStudentsAndRelations();
         }
     }
 }

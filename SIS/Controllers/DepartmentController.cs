@@ -52,7 +52,7 @@ namespace SIS.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetDepartment([FromBody] DepartmentDto department)
         {
             try
@@ -100,7 +100,7 @@ namespace SIS.Controllers
 
         //NON CRUD REQUESTS
         [HttpPost]
-        public async Task<IActionResult> AddLecture([FromBody] DepartmentLectures dep_lec)
+        public async Task<IActionResult> AddLecture([FromBody] DepartmentLecturesDto dep_lec)
         {
             try
             {

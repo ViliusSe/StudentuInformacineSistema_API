@@ -6,7 +6,7 @@ namespace SIS.Interfaces
     {
         public int AddDepartment(string name);
         public IEnumerable<DepartmentDto> GetAllDepartments();
-        public IEnumerable<DepartmentDto> GetDepartment(int id);
+        public DepartmentDto GetDepartment(int id);
         public int UpdateDepartment(int id, string name);
         public int DeleteDepartment(int id);
 

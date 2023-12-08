@@ -6,7 +6,7 @@ namespace SIS.Interfaces
     {
         public int AddLecture(string name);
         public IEnumerable<LectureDto> GetAllLectures();
-        public IEnumerable<LectureDto> GetLecture(int id);
+        public LectureDto GetLecture(int id);
         public int UpdateLecture(int id, string name);
         public int DeleteLecture(int id);
 

@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SIS.Repositories
 {
@@ -51,11 +52,11 @@ namespace SIS.Repositories
             }
         }
 
-        public IEnumerable<StudentDto> GetStudent(int id)
+        public StudentDto GetStudent(int id)
         {
             try
             {
-                return _connection.Query<StudentDto>("SELECT * FROM students WHERE id = @id", id); ;
+                return _connection.QuerySingleOrDefault<StudentDto>("SELECT * FROM students WHERE id = @id", new { id }); ;
             }
             catch (Exception ex)
             {
@@ -70,12 +71,11 @@ namespace SIS.Repositories
             {
                 var queryArguments = new
                 {
-                    id = id,
                     departments_id = department_id,
-                    name = name
-
+                    name = name,
+                    id = id
                 };
-                return _connection.Execute("UPDATE students SET departments_id = @departments_id, name=@name WHERE id = @id", queryArguments);
+                return _connection.Execute("UPDATE students SET departments_id = @departments_id, name = @name WHERE id = @id", queryArguments);
             }
             catch (Exception ex)
             {
@@ -112,6 +112,19 @@ namespace SIS.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine("Klaida 500 - Students repository, AddStudent", ex);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IEnumerable<Student> ShowAllStudentsAndRelations()
+        {
+            try
+            {
+                return _connection.Query<Student>("SELECT * FROM students");
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Klaida 500 - Students repository, ShowALlStudentsAndRelations", ex);
                 throw new Exception(ex.Message);
             }
         }

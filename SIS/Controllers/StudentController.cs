@@ -21,6 +21,21 @@ namespace SIS.Controllers
 
         }
 
+        //GENERALL INFO
+        [HttpGet]
+            public async Task<IActionResult> ShowAllStudentsAndRelations()
+        {
+            try
+            {
+                return Ok(_studentsService.ShowAllStudentsAndRelations());
+            }catch (Exception ex)
+            {
+                _logger.LogInformation("Seri Log is Working");
+                return BadRequest(ex);
+                throw;
+            }
+        }
+
         //CRUD REQUESTS
         [HttpPost]
         public async Task<IActionResult> CreateStudent([FromBody] StudentDto student)
@@ -53,7 +68,7 @@ namespace SIS.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetStudent([FromBody] StudentDto student)
         {
             try
@@ -74,7 +89,7 @@ namespace SIS.Controllers
          */
 
         [HttpPut]
-        public async Task<IActionResult> UpdateStudent([FromBody] Student student)
+        public async Task<IActionResult> UpdateStudent([FromBody] StudentDto student)
         {
             try
             {
@@ -89,7 +104,7 @@ namespace SIS.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteStudent([FromBody] Student student)
+        public async Task<IActionResult> DeleteStudent([FromBody] StudentDto student)
         {
             try
             {
