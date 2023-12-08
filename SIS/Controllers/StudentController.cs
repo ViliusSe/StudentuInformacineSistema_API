@@ -137,11 +137,11 @@ namespace SIS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ShowStudentLectures([FromBody] StudentDto student)
+        public async Task<IActionResult> ShowStudentLectures([FromBody] StudentLecturesDto stu_lec)
         {
             try
             {
-                return Ok(_studentsService.ShowStudentLectures(student.id));
+                return Ok(_studentsService.ShowStudentLectures(stu_lec.students_id));
             }catch (Exception ex)
             {
                 _logger.LogInformation("Seri Log is Working");

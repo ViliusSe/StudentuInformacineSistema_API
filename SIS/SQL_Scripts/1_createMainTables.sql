@@ -18,13 +18,13 @@ CREATE TABLE students (
 );
 
 CREATE TABLE departments_lectures (
+    id SERIAL PRIMARY KEY,
     departments_id INTEGER REFERENCES departments(id) ON DELETE CASCADE,
-    lectures_id INTEGER REFERENCES lectures(id) ON DELETE CASCADE,
-    PRIMARY KEY (departments_id, lectures_id)
+    lectures_id INTEGER REFERENCES lectures(id) ON DELETE CASCADE
 );
 
 CREATE TABLE students_lectures (
+    id SERIAL PRIMARY KEY,
     students_id INTEGER REFERENCES students(id) ON DELETE CASCADE,
-    lectures_id INTEGER REFERENCES lectures(id) ON DELETE CASCADE,
-    PRIMARY KEY (students_id, lectures_id)
+    lectures_id INTEGER REFERENCES lectures(id) ON DELETE CASCADE
 );

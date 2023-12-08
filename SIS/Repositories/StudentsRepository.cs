@@ -129,7 +129,7 @@ namespace SIS.Repositories
             }
         }
 
-        public IEnumerable<LectureDto> ShowStudentLectures(int student_id)
+        public IEnumerable<LectureDto>ShowStudentLectures(int student_id)
         {
             try
             {
