@@ -51,5 +51,10 @@ namespace SIS.Services
         {
             return _studentsRepository.ShowAllStudentsAndRelations();
         }
+
+        public IEnumerable<LectureDto> ShowStudentLectures(int student_id)
+        {
+            return _studentsRepository.ShowStudentLectures(student_id);
+        }
     }
 }

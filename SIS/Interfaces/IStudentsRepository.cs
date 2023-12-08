@@ -11,5 +11,6 @@ namespace SIS.Interfaces
         public int DeleteStudent(int id);
         public int AddDepartment(int id, int departments_id);
         public IEnumerable<Student> ShowAllStudentsAndRelations();
+        public IEnumerable<LectureDto> ShowStudentLectures(int student_id);
     }
 }

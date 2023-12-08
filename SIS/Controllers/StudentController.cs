@@ -135,5 +135,19 @@ namespace SIS.Controllers
             }
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowStudentLectures([FromBody] StudentDto student)
+        {
+            try
+            {
+                return Ok(_studentsService.ShowStudentLectures(student.id));
+            }catch (Exception ex)
+            {
+                _logger.LogInformation("Seri Log is Working");
+                return BadRequest(ex);
+                throw;
+            }
+        }
     }
 }

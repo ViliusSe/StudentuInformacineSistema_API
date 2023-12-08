@@ -128,5 +128,20 @@ namespace SIS.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public IEnumerable<LectureDto> ShowStudentLectures(int student_id)
+        {
+            try
+            {
+                return _connection.Query<LectureDto>("SELECT lectures.name FROM lectures" +
+                                                           "JOIN lectures_students ON lectures.id = lectures_students.lectures_id" +
+                                                           "JOIN students ON lectures_students.students_id = students.id" +
+                                                           "WHERE students.id = @student_id;", new {student_id});
+            } catch (Exception ex)
+            {
+                Console.WriteLine("Klaida 500 - Students repository, ShowALlStudentsAndRelations", ex);
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
